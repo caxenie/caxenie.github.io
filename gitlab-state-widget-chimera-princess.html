@@ -1,0 +1,130 @@
+<html><body><style type="text/css">
+body {
+    color: #666;
+    font: 13px helvetica,arial,freesans,clean,sans-serif;
+    line-height: 1.4;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+a {
+    color: #4183C4;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+#gh-widget {
+    border: 1px solid #666;
+    overflow: hidden;
+}
+#gh-widget-top {
+    background-color: #333;
+    color: #e6e6e7;
+    padding: 7px 10px;
+    overflow: hidden;
+}
+#gh-widget-top span {
+    float: left;
+    margin: 2px 0 0;
+}
+#gh-widget-top a {
+    float:right;
+}
+#gh-widget-head {
+    border-bottom: 1px solid #CCC;
+    padding: 2px 5px 5px;
+    margin: 5px;
+}
+#gh-repo-name {
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: capitalize;    
+}
+#gh-repo-description {
+    margin: 5px 0 0;
+    padding: 0;
+}
+#gh-widget-body {
+    padding: 0 5px;
+    margin: 5px;
+}
+#gh-repo-info {
+    font-size: 11px;
+}
+#gh-repo-watchers {
+    margin: 8px 0 0;
+    padding: 0;
+    overflow: hidden;
+    width: 105%;
+}
+#gh-repo-watchers li {
+    color: #999;
+    float:left;
+    font-size: 10px;
+    height: 68px;
+    list-style: none;
+    margin: 0 5px 5px 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    width: 50px;
+    word-wrap: break-word;
+}
+#gh-repo-watchers li a {
+    color: #999;
+}
+#gh-repo-watchers li img {
+    display: block;
+    margin-bottom: 2px;
+}
+</style>
+<div id="gh-widget">
+    <div id="gh-widget-top">
+        <span>AKII Microlab's repos on GitLab</span>
+        <a href="https://github.com/" title="Github.com" target="_blank"><img src="https://www.creationline.com/wp-content/uploads/2018/02/gitlab-215x150.png" alt="gitlab.com" title="gitlab.com" /></a>
+    </div>
+    <div id="gh-widget-head">
+        <a href="" id="gh-repo-name" target="_blank"></a>
+        <p id="gh-repo-description"></p>
+    </div>  
+    <div id="gh-widget-body">
+        <div id="gh-repo-info"></div>
+    </div>  
+</div>
+<script type="text/javascript">
+  var params = function () {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++) {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  }()
+  var user = params.user,
+      repo = params.repo,
+      head = document.getElementsByTagName('head')[0],
+      title = document.getElementById('gh-repo-name'),
+      desc = document.getElementById('gh-repo-description'),
+      info = document.getElementById('gh-repo-info'),
+      watchers = document.getElementById('gh-repo-watchers');
+  // Add commas to numbers
+  function addCommas(n) {
+    return n.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+  }
+  function jsonp(path, func) {
+    var el = document.createElement('script');
+    el.src = path + '?callback=' + func +'';
+    head.insertBefore(el, head.firstChild);
+  }
+  function buildRepo(obj) {
+     title.href = "https://gitlab.com/akii-microlab/princess";
+     title.innerHTML = "PRINCESS: Prediction of Individual Breast Cancer Evolution to Surgical Size";
+     desc.innerHTML = "Modelling surgical size is not inherently meant to replicate the tumor's exact form and proportions, but instead to elucidate the degree of the tissue volume that may be surgically removed in terms of improving patient survival and minimize the risk that a second or third operation will be needed to eliminate all malignant cells entirely. Given the broad range of models of tumor growth, there is no specific rule of thumb about how to select the most suitable model for a particular breast cancer type and whether that would influence its subsequent application in surgery planning. Typically, these models require tumor biology-dependent parametrization, which hardly generalizes to cope with ttumor heterogeneity. In addition, the datasets are limited in size owing to the restricted or expensive methods of measurement. We address the shortcomings that incomplete biological specifications, the variety of tumor types and the limited size of the data bring to existing mechanistic tumor growth models and introduce a Machine Learning model for the PRediction of INdividual breast Cancer Evolution to Surgical Size (PRINCESS). This is a data-driven model based on neural networks capable of unsupervised learning of cancer growth curves. PRINCESS learns the temporal evolution of the tumor along with the underlying distribution of the measurement space. We demonstrate the superior accuracy of PRINCESS, against four typically used tumor growth models, in extracting tumor growth curves from a set of nine clinical breast cancer datasets. Our experiments show that, without any modification, PRINCESS can learn the underlying growth curves being versatile between breast cancer types.";
+  }
+  
+jsonp('https://api.github.com/repos/' + user + '/' + repo, 'buildRepo');
+    
+</script></body></html>

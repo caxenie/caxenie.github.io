@@ -1,0 +1,130 @@
+<html><body><style type="text/css">
+body {
+    color: #666;
+    font: 13px helvetica,arial,freesans,clean,sans-serif;
+    line-height: 1.4;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+a {
+    color: #4183C4;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+#gh-widget {
+    border: 1px solid #666;
+    overflow: hidden;
+}
+#gh-widget-top {
+    background-color: #333;
+    color: #e6e6e7;
+    padding: 7px 10px;
+    overflow: hidden;
+}
+#gh-widget-top span {
+    float: left;
+    margin: 2px 0 0;
+}
+#gh-widget-top a {
+    float:right;
+}
+#gh-widget-head {
+    border-bottom: 1px solid #CCC;
+    padding: 2px 5px 5px;
+    margin: 5px;
+}
+#gh-repo-name {
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: capitalize;    
+}
+#gh-repo-description {
+    margin: 5px 0 0;
+    padding: 0;
+}
+#gh-widget-body {
+    padding: 0 5px;
+    margin: 5px;
+}
+#gh-repo-info {
+    font-size: 11px;
+}
+#gh-repo-watchers {
+    margin: 8px 0 0;
+    padding: 0;
+    overflow: hidden;
+    width: 105%;
+}
+#gh-repo-watchers li {
+    color: #999;
+    float:left;
+    font-size: 10px;
+    height: 68px;
+    list-style: none;
+    margin: 0 5px 5px 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    width: 50px;
+    word-wrap: break-word;
+}
+#gh-repo-watchers li a {
+    color: #999;
+}
+#gh-repo-watchers li img {
+    display: block;
+    margin-bottom: 2px;
+}
+</style>
+<div id="gh-widget">
+    <div id="gh-widget-top">
+        <span>AKII Microlab's repos on GitLab</span>
+        <a href="https://github.com/" title="Github.com" target="_blank"><img src="https://www.creationline.com/wp-content/uploads/2018/02/gitlab-215x150.png" alt="gitlab.com" title="gitlab.com" /></a>
+    </div>
+    <div id="gh-widget-head">
+        <a href="" id="gh-repo-name" target="_blank"></a>
+        <p id="gh-repo-description"></p>
+    </div>  
+    <div id="gh-widget-body">
+        <div id="gh-repo-info"></div>
+    </div>  
+</div>
+<script type="text/javascript">
+  var params = function () {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++) {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  }()
+  var user = params.user,
+      repo = params.repo,
+      head = document.getElementsByTagName('head')[0],
+      title = document.getElementById('gh-repo-name'),
+      desc = document.getElementById('gh-repo-description'),
+      info = document.getElementById('gh-repo-info'),
+      watchers = document.getElementById('gh-repo-watchers');
+  // Add commas to numbers
+  function addCommas(n) {
+    return n.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+  }
+  function jsonp(path, func) {
+    var el = document.createElement('script');
+    el.src = path + '?callback=' + func +'';
+    head.insertBefore(el, head.firstChild);
+  }
+  function buildRepo(obj) {
+     title.href = "https://gitlab.com/akii-microlab/glueck";
+     title.innerHTML = "GLUECK: Growth pattern Learning for Unsupervised Extraction of Cancer Kinetics";
+     desc.innerHTML = "Neoplastic processes are described by complex and heterogeneous dynamics. The interaction of neoplastic cells with their environment describes tumor growth and is critical for the initiation of cancer invasion. Despite the large spectrum of tumor growth models, there is no clear guidance on how to choose the most appropriate model for a particular cancer and how this will impact its subsequent use in therapy planning. Such models need parametrization that is dependent on tumor biology and hardly generalize to other tumor types and their variability. Moreover, the datasets are small in size due to the limited or expensive measurement methods. Alleviating the limitations that incomplete biological descriptions, the diversity of tumor types, and the small size of the data bring to mechanistic models, we introduce Growth pattern Learning for Unsupervised Extraction of Cancer Kinetics (GLUECK) a novel, data-driven model based on a neural network capable of unsupervised learning of cancer growth curves. Employing mechanisms of competition, cooperation, and correlation in neural networks, GLUECK learns the temporal evolution of the input data along with the underlying distribution of the input space. We demonstrate the superior accuracy of GLUECK, against four typically used tumor growth models, in extracting growth curves from a four clinical tumor datasets. Our experiments show that, without any modification, GLUECK can learn the underlying growth curves being versatile between and within tumor types.";
+  }
+  
+jsonp('https://api.github.com/repos/' + user + '/' + repo, 'buildRepo');
+    
+</script></body></html>
